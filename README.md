@@ -2,7 +2,7 @@
 
 A lightweight, ultra-fast Pyrogram user bot that listens to the official Telegram service account (`777000`), instantly extracts verification codes, and pushes them to a Discord webhook. Includes a minimalist web dashboard for real-time monitoring.
 
-## Features
+## ✨ Features
 
 - 🚀 **Instant Forwarding:** Automatically detects and forwards classic 5-digit codes and modern 11-character Web Login codes.
 - ☁️ **Cloud-Native & Stateless:** Runs entirely in memory with no database or local storage dependencies. Designed to run flawlessly on ephemeral cloud hosts like Render.
@@ -11,7 +11,7 @@ A lightweight, ultra-fast Pyrogram user bot that listens to the official Telegra
 
 ---
 
-## Configuration
+## ⚙️ Configuration
 
 Set the following environment variables in your hosting provider's dashboard:
 
@@ -26,7 +26,7 @@ Set the following environment variables in your hosting provider's dashboard:
 
 ---
 
-## Getting your Session String
+## 🔑 Getting your Session String
 
 Because the bot runs headlessly on the cloud, you need to generate an authentication session string on your local machine first. 
 
@@ -44,7 +44,7 @@ Because the bot runs headlessly on the cloud, you need to generate an authentica
 
 ---
 
-## Deployment (Render)
+## 🚀 Deployment (Render)
 
 This project is optimized for Render's Free Web Service tier.
 
