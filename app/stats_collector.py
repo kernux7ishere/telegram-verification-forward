@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 import os
 import time
+import psutil
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from typing import Optional, Tuple
@@ -70,16 +71,32 @@ class StatsCollector:
         self._started_at = time.monotonic()
         self._cache: Optional[SystemStats] = None
         self._cached_at = 0.0
+        self._process = psutil.Process()
+        # Prime the CPU usage baseline
+        self._process.cpu_percent()
 
     # -- individual metrics -------------------------------------------------
 
     def get_memory_usage(self) -> Tuple[float, float]:
         """(resident MB, percent of the container limit)."""
-        return 0.0, 0.0
+        try:
+            mem = self._process.memory_info()
+            used_mb = mem.rss / (1024 * 1024)
+            percent = (used_mb / self._memory_limit_mb) * 100.0
+            return used_mb, min(100.0, percent)
+        except (psutil.Error, OSError):
+            return 0.0, 0.0
 
     def get_cpu_usage(self) -> float:
         # Non-blocking: measured against the previous call, so no sleep cost.
-        return 0.0
+        try:
+            # CPU percent can exceed 100% on multicore systems.
+            count = psutil.cpu_count(logical=True)
+            if not count:
+                count = 1
+            return self._process.cpu_percent(interval=None) / count
+        except (psutil.Error, OSError, TypeError):
+            return 0.0
 
     def calculate_uptime(self) -> int:
         return int(time.monotonic() - self._started_at)
