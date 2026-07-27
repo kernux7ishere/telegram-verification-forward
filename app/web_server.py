@@ -26,7 +26,7 @@ def create_app(service: Service | None = None, start_bot: bool = True) -> Flask:
 
     @flask_app.get("/api/stats")
     def stats():
-        return jsonify(service.stats.get_stats())
+        return jsonify(service.stats.collect().to_dict())
 
     @flask_app.get("/api/logs")
     def get_logs():

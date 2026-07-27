@@ -62,9 +62,8 @@ def _memory_limit_mb() -> float:
 class StatsCollector:
     """Samples metrics at most once every :data:`CACHE_TTL_SECONDS`."""
 
-    def __init__(self, telegram_client=None, db=None, discord_sender=None) -> None:
+    def __init__(self, telegram_client=None, discord_sender=None) -> None:
         self.telegram_client = telegram_client
-        self.db = db
         self.discord_sender = discord_sender
 
         self._memory_limit_mb = _memory_limit_mb()
