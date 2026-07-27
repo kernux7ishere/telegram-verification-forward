@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import logging
-import os
 import time
 import psutil
 from dataclasses import asdict, dataclass, field
@@ -138,17 +137,6 @@ class StatsCollector:
         self._cache = stats
         self._cached_at = now
         return stats
-
-
-def _to_iso(value: Optional[str]) -> Optional[str]:
-    """SQLite stores naive UTC strings; expose them as ISO-8601 Zulu."""
-    if not value:
-        return None
-    try:
-        parsed = datetime.strptime(value, "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
-    except ValueError:
-        return value
-    return parsed.isoformat().replace("+00:00", "Z")
 
 
 def format_duration(seconds: int) -> str:

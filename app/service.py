@@ -44,7 +44,6 @@ class Service:
 
         for code in codes:
             logger.info(f"Code received: {code.code}")
-            self.stats.record_code(code)
             await self.discord.send_code(code)
 
     def start(self) -> bool:

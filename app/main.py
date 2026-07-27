@@ -1,8 +1,7 @@
-"""Local entry point: `doppler run -- python -m app.main`.
+"""Local entry point: `python -m app.main`.
 
-Starts the Telegram worker and serves the dashboard with Flask's built-in
-server. In production Render runs `gunicorn app.web_server:app` instead, which
-starts the same worker through `app.service`.
+Starts the Telegram worker and serves the dashboard with Flask's built-in server.
+In production Render runs `gunicorn app.web_server:app` via app.service.
 """
 
 from __future__ import annotations

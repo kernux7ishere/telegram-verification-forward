@@ -23,14 +23,6 @@ ALPHANUMERIC = "alphanumeric"
 CUSTOM = "custom"
 
 
-class CodeType:
-    """Namespace of the supported code classifications."""
-
-    NUMERIC = NUMERIC
-    ALPHANUMERIC = ALPHANUMERIC
-    CUSTOM = CUSTOM
-
-
 @dataclass
 class VerificationCode:
     """A single code extracted from a message."""
@@ -96,9 +88,6 @@ CONTEXT_KEYWORDS = (
 
 # Candidates that are never codes, regardless of context.
 BLOCKLIST = frozenset({"777000", "0000", "00000", "000000"})
-
-# How far back to look for a context keyword.
-_CONTEXT_WINDOW = 48
 
 # A digit glued to the candidate through one of these separators means the
 # candidate is a fragment of a date, time, version or IP address.
@@ -169,29 +158,6 @@ class MessageProcessor:
 
         results.sort(key=lambda c: c.confidence, reverse=True)
         return results
-
-    def classify_code(self, code: str) -> str:
-        """Classify a bare code string."""
-        stripped = code.replace("-", "").replace(" ", "")
-        if stripped.isdigit():
-            return NUMERIC
-        if stripped.isalnum():
-            return ALPHANUMERIC
-        return CUSTOM
-
-    def is_valid_code(self, code: str, patterns: Iterable[Pattern] | None = None) -> bool:
-        """True when ``code`` matches one of the known shapes end-to-end."""
-        if not code or code in self.blocklist:
-            return False
-        for pattern in patterns or self.patterns:
-            match = pattern.regex.fullmatch(code)
-            if match:
-                return self._shape_ok(code, pattern)
-        return False
-
-    def filter_false_positives(self, codes: Iterable[str]) -> List[str]:
-        """Drop obvious non-codes from a list of raw candidate strings."""
-        return [code for code in codes if self.is_valid_code(code)]
 
     # -- scoring ------------------------------------------------------------
 

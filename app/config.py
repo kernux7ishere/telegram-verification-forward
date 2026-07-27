@@ -1,8 +1,6 @@
 """Configuration loading and logging setup.
 
-Secrets come from the environment. In production they are injected by Doppler
-(`doppler run -- ...`); locally a plain `.env` file is read as a fallback so the
-app can be started without the Doppler CLI installed.
+Secrets come from environment variables. A local `.env` file is read as a fallback.
 """
 
 from __future__ import annotations

@@ -1,5 +1,4 @@
 import os
-from datetime import datetime, timezone
 from flask import Flask, jsonify, render_template, request
 from app.config import Config
 from app.service import Service, get_service
@@ -27,10 +26,6 @@ def create_app(service: Service | None = None, start_bot: bool = True) -> Flask:
     @flask_app.get("/api/stats")
     def stats():
         return jsonify(service.stats.collect().to_dict())
-
-    @flask_app.get("/api/logs")
-    def get_logs():
-        return jsonify({"logs": [], "limit": 0, "offset": 0})
 
     @flask_app.after_request
     def add_security_headers(response):

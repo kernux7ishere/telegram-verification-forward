@@ -69,9 +69,6 @@ class TelegramClient:
     async def is_connected(self) -> bool:
         return self._status == STATUS_ONLINE and self._client is not None
 
-    async def get_last_message_time(self) -> Optional[datetime]:
-        return self._last_message_time
-
     @property
     def last_message_time(self) -> Optional[datetime]:
         """Synchronous view of the same value, for the stats collector."""
