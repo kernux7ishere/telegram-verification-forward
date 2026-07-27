@@ -1,0 +1,295 @@
+/* Verification Forwarder dashboard — dark theme, no framework. */
+
+:root {
+  --bg: #0b1020;
+  --bg-glow-1: rgba(217, 119, 87, 0.16);
+  --bg-glow-2: rgba(66, 112, 214, 0.14);
+  --surface: rgba(20, 27, 48, 0.82);
+  --surface-strong: rgba(28, 37, 63, 0.95);
+  --border: rgba(126, 148, 196, 0.16);
+  --text: #e8edf7;
+  --text-dim: #93a1bd;
+  --accent: #d97757;
+  --accent-soft: #f0a98b;
+  --good: #4ade80;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --radius: 16px;
+  --shadow: 0 12px 32px rgba(0, 0, 0, 0.38);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+[x-cloak] { display: none !important; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(900px 500px at 12% -8%, var(--bg-glow-1), transparent 62%),
+    radial-gradient(800px 520px at 92% 4%, var(--bg-glow-2), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 20px 56px;
+}
+
+/* --- top bar ------------------------------------------------------------ */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: linear-gradient(150deg, var(--accent), #a8492c);
+  color: #fff;
+  font-size: 22px;
+  box-shadow: 0 8px 20px rgba(217, 119, 87, 0.32);
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 1.24rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.brand-sub {
+  margin: 2px 0 0;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+/* --- hero ---------------------------------------------------------------- */
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 22px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: linear-gradient(160deg, var(--surface-strong), rgba(16, 22, 41, 0.75));
+  box-shadow: var(--shadow);
+}
+
+.hero-copy { min-width: 0; }
+
+.hero-line {
+  margin: 0 0 6px;
+  font-size: 1.12rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.hero-sub {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  max-width: 52ch;
+}
+
+/* --- pet sprite --------------------------------------------------------- */
+
+/* Eris (Petdex) idle animation. The sheet is a single row of six 192x208
+   frames, so the whole animation is one steps() keyframe walking
+   background-position across it — no JavaScript involved. */
+#pet-sprite {
+  flex: 0 0 auto;
+  width: 192px;
+  height: 208px;
+  background-image: url("../assets/pets/cat-eris.webp");
+  background-repeat: no-repeat;
+  background-size: 1152px 208px;
+  image-rendering: pixelated;
+  animation: pet-idle 1100ms steps(6) infinite;
+}
+
+@keyframes pet-idle {
+  from { background-position: 0 0; }
+  to   { background-position: -1152px 0; }
+}
+
+/* --- stats grid --------------------------------------------------------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(232px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  position: relative;
+  padding: 17px 18px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0.55;
+}
+
+.card:hover { transform: translateY(-2px); border-color: rgba(217, 119, 87, 0.34); }
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.card-icon { font-size: 0.95rem; }
+
+.card-value {
+  margin-top: 9px;
+  font-size: 1.85rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+  word-break: break-all;
+}
+
+.card-value .unit {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-dim);
+}
+
+.card-foot {
+  margin-top: 5px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.card-warn { border-color: rgba(251, 191, 36, 0.42); }
+.card-warn .card-value { color: var(--warn); }
+.card-warn .meter-fill { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+
+.card-bad { border-color: rgba(248, 113, 113, 0.45); }
+.card-bad .card-value { color: var(--bad); }
+.card-bad .meter-fill { background: linear-gradient(90deg, #f87171, #ef4444); }
+
+.meter {
+  margin-top: 10px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(126, 148, 196, 0.16);
+  overflow: hidden;
+}
+
+.meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+  transition: width 550ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --- footer ------------------------------------------------------------- */
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  font-size: 0.83rem;
+  color: var(--text-dim);
+}
+
+.footer-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--good);
+}
+
+.footer-dot.is-stale { background: var(--bad); }
+.footer-error { color: var(--bad); }
+
+.refresh {
+  margin-left: auto;
+  padding: 7px 15px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: border-color 160ms ease, opacity 160ms ease;
+}
+
+.refresh:hover:not(:disabled) { border-color: rgba(217, 119, 87, 0.5); }
+.refresh:disabled { opacity: 0.5; cursor: default; }
+
+/* --- responsive --------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  .shell { padding: 20px 14px 40px; }
+  .hero { flex-direction: column; text-align: center; gap: 12px; padding: 20px 16px; }
+  .hero-sub { margin-inline: auto; }
+  .grid { grid-template-columns: repeat(auto-fit, minmax(158px, 1fr)); gap: 12px; }
+  .card-value { font-size: 1.5rem; }
+}
+
+/* Only stack fully on the narrowest phones — 390px still fits two columns. */
+@media (max-width: 340px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  /* Hold the sprite on its first frame rather than flashing through the row. */
+  #pet-sprite { animation: none !important; background-position: 0 0 !important; }
+}

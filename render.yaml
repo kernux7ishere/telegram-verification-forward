@@ -1,0 +1,23 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: telegram-forwarder
+    runtime: python
+    plan: free
+    region: singapore
+    branch: master
+    autoDeploy: true
+    buildCommand: chmod +x scripts/*.sh && ./scripts/build.sh
+    startCommand: ./scripts/start.sh
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: RUN_BOT
+        value: "true"
+      - key: FLASK_SECRET_KEY
+        generateValue: true

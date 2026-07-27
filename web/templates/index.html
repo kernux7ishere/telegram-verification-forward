@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Verification Forwarder</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <script defer src="{{ url_for('static', filename='js/utils.js') }}"></script>
+  <script defer src="{{ url_for('static', filename='js/stats.js') }}"></script>
+  <script defer src="{{ url_for('static', filename='js/vendor/alpine.min.js') }}"></script>
+</head>
+<body>
+  <main class="shell" x-data="statsDashboard()" x-init="start()">
+
+    <header class="topbar">
+      <div class="brand">
+        <div>
+          <h1>Verification Forwarder</h1>
+          <p class="brand-sub">Telegram&nbsp;→&nbsp;Discord</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div id="pet-sprite" role="img" aria-label="Eris, idling"></div>
+      <div class="hero-copy">
+        <p class="hero-line">Eris is on watch.</p>
+        <p class="hero-sub">
+          Verification codes are picked up from Telegram and forwarded straight
+          to your Discord channel.
+        </p>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="System statistics">
+
+      <article class="card" :class="memoryClass">
+        <div class="card-head"><span class="card-icon">🧠</span> RAM Usage</div>
+        <div class="card-value">
+          <span x-text="fmt.decimal(display.memory_used_mb)">0</span><span class="unit"> MB</span>
+        </div>
+        <div class="meter"><span class="meter-fill" :style="`width:${Math.min(stats.memory_percent, 100)}%`"></span></div>
+        <div class="card-foot"><span x-text="fmt.decimal(stats.memory_percent)">0</span>% of 512 MB</div>
+      </article>
+
+      <article class="card" :class="cpuClass">
+        <div class="card-head"><span class="card-icon">💻</span> CPU Usage</div>
+        <div class="card-value">
+          <span x-text="fmt.decimal(display.cpu_percent)">0</span><span class="unit"> %</span>
+        </div>
+        <div class="meter"><span class="meter-fill" :style="`width:${Math.min(stats.cpu_percent, 100)}%`"></span></div>
+        <div class="card-foot">process time share</div>
+      </article>
+
+    </section>
+
+    <footer class="footer">
+      <span class="footer-dot" :class="{ 'is-stale': error }"></span>
+      <span x-show="!error">Last update: <span x-text="fmt.timeAgo(stats.last_update)">just now</span></span>
+      <span x-show="error" x-cloak class="footer-error" x-text="error"></span>
+      <button class="refresh" @click="refresh()" :disabled="loading">Refresh</button>
+    </footer>
+
+  </main>
+</body>
+</html>

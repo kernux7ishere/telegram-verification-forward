@@ -1,0 +1,19 @@
+# Doppler project configuration.
+#
+#   doppler setup                       # link this directory to project/config
+#   doppler secrets set TELEGRAM_API_ID # write a secret
+#   doppler run -- python -m app.main   # run with secrets injected
+#
+# Secrets are never written to disk: `doppler run` injects them into the
+# process environment, which is what app/config.py reads.
+
+setup:
+  project: telegram-verification-forwarder
+  config: dev
+
+scripts:
+  install: python -m pip install -r requirements.txt
+  start: python -m app.main
+  serve: gunicorn -w 1 --threads 4 -b 0.0.0.0:${PORT:-5000} app.web_server:app
+  test: python -m pytest
+  session: python generate_session.py
