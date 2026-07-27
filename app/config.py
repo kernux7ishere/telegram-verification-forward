@@ -77,7 +77,6 @@ class Config:
     discord_max_retries: int = 3
 
     # Storage
-    database_path: str = "./data/verification_codes.db"
     log_dir: str = "./logs"
     log_level: str = "INFO"
     log_retention_days: int = 30
@@ -106,7 +105,6 @@ class Config:
             min_confidence=_env_float("MIN_CONFIDENCE", 0.5),
             discord_webhook_url=os.environ.get("DISCORD_WEBHOOK_URL", "").strip(),
             discord_max_retries=_env_int("DISCORD_MAX_RETRIES", 3),
-            database_path=os.environ.get("DATABASE_PATH", "./data/verification_codes.db").strip(),
             log_dir=os.environ.get("LOG_DIR", "./logs").strip(),
             log_level=os.environ.get("LOG_LEVEL", "INFO").strip().upper(),
             log_retention_days=_env_int("LOG_RETENTION_DAYS", 30),

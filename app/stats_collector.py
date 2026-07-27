@@ -23,16 +23,10 @@ class SystemStats:
     memory_used_mb: float = 0.0
     memory_percent: float = 0.0
     cpu_percent: float = 0.0
-    codes_today: int = 0
-    codes_total: int = 0
-    last_code: Optional[str] = None
-    last_code_preview: str = ""
-    last_code_time: Optional[str] = None
     bot_status: str = "offline"
     uptime_seconds: int = 0
     uptime_formatted: str = "0m"
     last_message_time: Optional[str] = None
-    database_size_mb: float = 0.0
     codes_sent: int = 0
     codes_failed: int = 0
     version: str = __version__
@@ -111,18 +105,6 @@ class StatsCollector:
 
         stats.uptime_seconds = self.calculate_uptime()
         stats.uptime_formatted = format_duration(stats.uptime_seconds)
-
-        if self.db is not None:
-            try:
-                db_stats = self.db.export_stats()
-                stats.codes_today = db_stats["codes_today"]
-                stats.codes_total = db_stats["codes_total"]
-                stats.last_code = db_stats["last_code"]
-                stats.last_code_preview = (db_stats["last_code"] or "")[:5]
-                stats.last_code_time = _to_iso(db_stats["last_code_time"])
-                stats.database_size_mb = db_stats["database_size_mb"]
-            except Exception as exc:  # noqa: BLE001 - stats must never 500
-                logger.warning("Stats: database read failed: %s", exc)
 
         if self.telegram_client is not None:
             stats.bot_status = self.telegram_client.status
