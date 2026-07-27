@@ -40,4 +40,12 @@ def create_app(service: Service | None = None, start_bot: bool = True) -> Flask:
 
     return flask_app
 
-app = create_app(start_bot=os.environ.get("RUN_BOT", "true").strip().lower() != "false")
+import threading
+
+def _delayed_start():
+    if os.environ.get("RUN_BOT", "true").strip().lower() != "false":
+        get_service(Config.from_env()).start()
+
+app = create_app(start_bot=False)
+threading.Thread(target=_delayed_start, daemon=True).start()
+
