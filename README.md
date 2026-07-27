@@ -56,16 +56,16 @@ The application will start a Gunicorn server. The Pyrogram client runs securely 
 
 ---
 
-## Keeping the Bot Awake 24/7 (Important)
+## ⏰ Keeping the Bot Awake 24/7 (Important)
 
 Free cloud providers like Render will put your instance to sleep if nobody visits the dashboard for 15 minutes. **When it goes to sleep, the bot shuts down and you will miss verification codes.**
 
 To keep the bot awake permanently for free, you need to set up a service that automatically "visits" your dashboard every few minutes.
 
 **Step-by-step setup:**
-1. Sign up for a free uptime monitoring service like [UptimeRobot](https://uptimerobot.com/) or [BetterStack](https://betterstack.com/).
-2. Create a new **HTTP Monitor** (or "Website Ping").
-3. Paste the URL of your Render dashboard (e.g., `https://telegram-forwarder-....onrender.com`).
-4. Set the ping interval to **5 minutes**.
+1. 🌐 Sign up for a free uptime monitoring service like [UptimeRobot](https://uptimerobot.com/) or [BetterStack](https://betterstack.com/).
+2. ➕ Create a new **HTTP Monitor** (or "Website Ping").
+3. 🔗 Paste the URL of your Render dashboard (e.g., `https://telegram-forwarder-....onrender.com`).
+4. ⏱️ Set the ping interval to **5 minutes**.
 
-The monitor will now ping your dashboard every 5 minutes, tricking Render into keeping the bot active indefinitely.
+⚡ The monitor will now ping your dashboard every 5 minutes, tricking Render into keeping the bot active indefinitely.
