@@ -57,6 +57,7 @@ class Pattern(NamedTuple):
 # Order matters: the most specific shapes are matched first and claim their
 # span, so "123-456" is never also reported as the bare number "123".
 PATTERNS: tuple[Pattern, ...] = (
+    Pattern("telegram_web", re.compile(r"(?<![A-Za-z0-9_-])[A-Za-z0-9_-]{11}(?![A-Za-z0-9_-])"), ALPHANUMERIC, 1.0),
     Pattern("instagram", re.compile(r"\b\d{3}-\d{3}\b"), NUMERIC, 0.90),
     Pattern("google", re.compile(r"\b\d{3}\s\d{3}\b"), NUMERIC, 0.85),
     Pattern("dashed_alnum", re.compile(r"\b[A-Za-z0-9]{4,}-[A-Za-z0-9]{4,}\b"), ALPHANUMERIC, 0.90),
@@ -189,13 +190,14 @@ class MessageProcessor:
 
     def _shape_ok(self, candidate: str, pattern: Pattern) -> bool:
         """Reject shapes that technically match but read as ordinary text."""
-        if pattern.name not in ("dashed_alnum", "alnum_solid"):
+        if pattern.name not in ("dashed_alnum", "alnum_solid", "telegram_web"):
             return True
         # "well-known" matches the regex but is a word, not a code. Real web
         # login codes mix character classes.
         has_digit = any(char.isdigit() for char in candidate)
         has_mixed_case = candidate.lower() != candidate and candidate.upper() != candidate
-        return has_digit and has_mixed_case
+        has_special = "_" in candidate or "-" in candidate
+        return (has_digit and has_mixed_case) or has_special
 
     def _score(
         self,
