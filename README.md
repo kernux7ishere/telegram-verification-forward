@@ -54,4 +54,12 @@ This project is optimized for Render's Free Web Service tier.
 
 The application will start a Gunicorn server. The Pyrogram client runs securely in a background thread, pushing codes to Discord the moment they arrive. 
 
-> **Note on Uptime:** Free cloud providers often sleep instances after inactivity. To keep the bot awake 24/7, point an external uptime monitor (like BetterStack or UptimeRobot) to your dashboard's root URL.
+> **Note on Uptime (Preventing sleep):** Free cloud providers like Render will put your instance to sleep if nobody visits the dashboard for 15 minutes. When it's asleep, the bot shuts down and you will miss codes!
+> 
+> To keep it awake 24/7 for free:
+> 1. Sign up for [UptimeRobot](https://uptimerobot.com/) or [BetterStack](https://betterstack.com/).
+> 2. Create a new "HTTP Monitor" (or "Website Ping").
+> 3. Paste the URL of your Render dashboard (e.g., `https://telegram-forwarder-....onrender.com`).
+> 4. Set the ping interval to **5 minutes**.
+>
+> The monitor will secretly "visit" your dashboard every 5 minutes, tricking Render into keeping the bot permanently awake.
