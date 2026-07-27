@@ -253,22 +253,6 @@ body {
 .footer-dot.is-stale { background: var(--bad); }
 .footer-error { color: var(--bad); }
 
-.refresh {
-  margin-left: auto;
-  padding: 7px 15px;
-  border-radius: 9px;
-  border: 1px solid var(--border);
-  background: var(--surface-strong);
-  color: var(--text);
-  font: inherit;
-  font-size: 0.82rem;
-  cursor: pointer;
-  transition: border-color 160ms ease, opacity 160ms ease;
-}
-
-.refresh:hover:not(:disabled) { border-color: rgba(217, 119, 87, 0.5); }
-.refresh:disabled { opacity: 0.5; cursor: default; }
-
 /* --- responsive --------------------------------------------------------- */
 
 @media (max-width: 720px) {
