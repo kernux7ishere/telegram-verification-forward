@@ -83,7 +83,6 @@ class Config:
     flask_secret_key: str = "change-me"
     port: int = 5000
     environment: str = "production"
-    run_bot: bool = True
     run_webui: bool = True
 
     version: str = field(default="", repr=False)
@@ -109,7 +108,6 @@ class Config:
             flask_secret_key=os.environ.get("FLASK_SECRET_KEY", "change-me").strip(),
             port=_env_int("PORT", 5000),
             environment=os.environ.get("ENVIRONMENT", "production").strip(),
-            run_bot=_env_bool("RUN_BOT", True),
             run_webui=_env_bool("RUN_WEBUI", True),
             version=__version__,
         )
