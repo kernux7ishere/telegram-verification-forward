@@ -17,7 +17,7 @@ services:
         value: production
       - key: LOG_LEVEL
         value: INFO
-      - key: RUN_BOT
+      - key: RUN_WEBUI
         value: "true"
       - key: FLASK_SECRET_KEY
         generateValue: true
