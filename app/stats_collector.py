@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 # Render's free web service caps a process at 512MB.
 DEFAULT_MEMORY_LIMIT_MB = 512.0
-CACHE_TTL_SECONDS = 5.0
+CACHE_TTL_SECONDS = 1.0
 
 
 @dataclass

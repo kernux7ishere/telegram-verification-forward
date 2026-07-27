@@ -2,7 +2,7 @@
 (function (global) {
   'use strict';
 
-  var BASE_INTERVAL = 5000;      // spec: refresh every 5 seconds
+  var BASE_INTERVAL = 1000;      // spec: refresh every 1 second
   var MAX_INTERVAL = 60000;      // backoff ceiling after repeated failures
   var REQUEST_TIMEOUT = 8000;
   var CACHE_KEY = 'stats-cache';

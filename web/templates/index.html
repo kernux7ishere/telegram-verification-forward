@@ -58,7 +58,6 @@
 
     <footer class="footer">
       <span class="footer-dot" :class="{ 'is-stale': error }"></span>
-      <span x-show="!error">Last update: <span x-text="fmt.timeAgo(stats.last_update)">just now</span></span>
       <span x-show="error" x-cloak class="footer-error" x-text="error"></span>
     </footer>
 
