@@ -22,7 +22,7 @@ RUN curl -sLf --retry 3 https://cli.doppler.com/install.sh | sh || \
     echo "Doppler CLI unavailable; falling back to environment variables"
 
 COPY . .
-RUN mkdir -p logs
+RUN chmod +x scripts/*.sh && mkdir -p logs
 
 # Drop privileges — nothing here needs root at runtime.
 RUN useradd --create-home --uid 10001 appuser && chown -R appuser:appuser /app
@@ -33,4 +33,4 @@ EXPOSE 5000
 HEALTHCHECK --interval=60s --timeout=10s --start-period=20s --retries=3 \
     CMD curl -fsS "http://localhost:${PORT}/health" || exit 1
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "1", "--threads", "2", "app.web_server:app"]
+CMD ["./scripts/start.sh"]

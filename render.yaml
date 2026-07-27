@@ -8,8 +8,8 @@ services:
     region: singapore
     branch: main
     autoDeploy: true
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 2 app.web_server:app
+    buildCommand: chmod +x scripts/*.sh && ./scripts/build.sh
+    startCommand: ./scripts/start.sh
     envVars:
       - key: PYTHON_VERSION
         value: "3.11.9"
