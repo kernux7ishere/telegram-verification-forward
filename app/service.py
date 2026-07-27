@@ -48,7 +48,6 @@ class Service:
 
     def start(self) -> bool:
         if self._started: return True
-        if not self.config.run_bot: return False
         if not self.config.telegram_configured: return False
 
         self._started = True
