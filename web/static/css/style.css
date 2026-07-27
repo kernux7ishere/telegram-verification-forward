@@ -243,14 +243,6 @@ body {
   color: var(--text-dim);
 }
 
-.footer-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--good);
-}
-
-.footer-dot.is-stale { background: var(--bad); }
 .footer-error { color: var(--bad); }
 
 /* --- responsive --------------------------------------------------------- */
